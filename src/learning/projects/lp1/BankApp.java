@@ -11,7 +11,6 @@ public class BankApp {
 		ac1.withdraw(150);
 		ac1.deposit(1230.00);
 		ac1.getBalance(); // print
-		System.out.println("Transaction history:");
 		ac1.getTransactions(); // print
 
 	}

@@ -37,11 +37,6 @@ public class Account {
 	
 	// Method: display options menu
 	
-	// Method: show transactions history. TODO: add display text here(or in the get method)
-	void transactionsHistory() {
-		getTransactions();
-	}
-
 	public void getBalance() {
 		System.out.println("Current Balance: " + balance);
 	}
@@ -51,6 +46,7 @@ public class Account {
 	}
 
 	public void getTransactions() {
+		System.out.println("Transaction history:");
 		if(!transactions.isEmpty()) {
 			transactions.forEach(System.out::println);			
 		} else {
