@@ -33,8 +33,6 @@ public class Account {
 		}
 	}
 	
-	// Method: show balance. TODO: add display text here(or in the get method)
-	
 	// Method: estimate investment results
 	
 	// Method: display options menu
@@ -44,8 +42,8 @@ public class Account {
 		getTransactions();
 	}
 
-	public double getBalance() {
-		return balance;
+	public void getBalance() {
+		System.out.println("Current Balance: " + balance);
 	}
 
 	public void setBalance(double value) {
