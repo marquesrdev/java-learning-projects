@@ -15,19 +15,21 @@ public class Account {
 		setClientName(cname);
 	}
 	
-	// Method: money deposit. TODO: add operation display text here?
+	// Method: money deposit.
 	void deposit(double value) {
 		if(value != 0.0) {
 			setBalance(value);
 			setTransaction(value);
+			System.out.println(value + " deposited in your account.");
 		}
 	}
 	
-	// Method: money withdraw. TODO: add operation display text here?
+	// Method: money withdraw.
 	void withdraw(double value) {
 		if(value != 0.0) {
 			setBalance(-value);
 			setTransaction(-value);
+			System.out.println(value + " withdrawn from your account.");
 		}
 	}
 	
