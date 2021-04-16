@@ -1,74 +1,75 @@
 package learning.projects.lp1;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.LinkedList;
 
 public class Account {
 	// Class variables
-	private double balance;
-	private ArrayList<Double> transactions = new ArrayList<Double>();
+	private BigDecimal balance = new BigDecimal(0.00);
+	private LinkedList<BigDecimal> transactions = new LinkedList<BigDecimal>();
 	private int clientID;
 	private String clientName;
 
 	// Class constructor
-	Account(String cname, int cid) {
+	public Account(String cname, int cid) {
 		setClientID(cid);
 		setClientName(cname);
 	}
 
 	// Method: money deposit.
-	void deposit(double value) {
-		if (value != 0.0) {
+	public void deposit(BigDecimal value) {
+		if (value.compareTo(BigDecimal.ZERO) != 0.0) {
 			setBalance(value);
 			setTransaction(value);
-			System.out.println(value + " deposited in your account.");
+			System.out.println(currencyFormat(value) + " deposited in your account.");
 		}
 	}
 
 	// Method: money withdraw.
-	void withdraw(double value) {
-		if (value != 0.0) {
-			setBalance(-value);
-			setTransaction(-value);
-			System.out.println(value + " withdrawn from your account.");
+	public void withdraw(BigDecimal value) {
+		if (value.compareTo(BigDecimal.ZERO) != 0.0) {
+			setBalance(value.negate());
+			setTransaction(value.negate());
+			System.out.println(currencyFormat(value) + " withdrawn from your account.");
 		}
 	}
 
 	// Method: simulate investment results
-	public void investimentSimulation(int years, int compoundYearly, Double value, Double interestRate) {
+	public void investimentSimulation(int years, int compoundYearly, BigDecimal value, Double interestRate) {
 		Double rate = interestRate / 100;
-		Double investmentTotalResult = value * Math.pow(1 + (rate / compoundYearly), compoundYearly * years);
-		Double investmentValueResult = investmentTotalResult - value;
-		System.out.println("Investing " + value + " at a " + interestRate + "%/year interest rate during " + years
-				+ " year(s) results in:");
-		System.out.println("Investiment return value: " + investmentValueResult);
-		System.out.println("Total amount after investment: " + investmentTotalResult);
+		BigDecimal interest = new BigDecimal(Math.pow(1 + (rate / compoundYearly), compoundYearly * years));
+		BigDecimal investmentTotalResult = value.multiply(interest);
+		BigDecimal investmentValueResult = investmentTotalResult.subtract(value);
+
+		System.out.println("Investing " + currencyFormat(value) + " at a " + interestRate
+				+ "%/year interest rate during " + years + " year(s) results in:");
+		System.out.println("Investiment return value: " + currencyFormat(investmentValueResult));
+		System.out.println("Total amount after investment: " + currencyFormat(investmentTotalResult));
 	}
 
 	// Method: display options menu
 
 	public void getBalance() {
-		System.out.println("Current Balance: " + balance);
+		System.out.println("Current Balance: " + currencyFormat(balance));
 	}
 
-	public void setBalance(double value) {
-		this.balance += value;
+	public void setBalance(BigDecimal value) {
+		balance = balance.add(value);
 	}
 
 	public void getTransactions() {
 		System.out.println("Transaction history:");
 		if (!transactions.isEmpty()) {
-			transactions.forEach(System.out::println); // Introduced in Java 8, this uses Lambda and method reference.
-														// Learn more about it!
-			// It could have been done like this
-			// for (Double transaction : transactions) {
-			// System.out.println(transaction);
-			// }
+			for (BigDecimal transaction : transactions) {
+				System.out.println(currencyFormat(transaction));
+			}
 		} else {
 			System.out.println("No transactions found!");
 		}
 	}
 
-	public void setTransaction(double value) {
+	public void setTransaction(BigDecimal value) {
 		this.transactions.add(value);
 	}
 
@@ -86,5 +87,15 @@ public class Account {
 
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
+	}
+
+	/**
+	 * This function returns a currency formated string
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static String currencyFormat(BigDecimal value) {
+		return NumberFormat.getCurrencyInstance().format(value);
 	}
 }
