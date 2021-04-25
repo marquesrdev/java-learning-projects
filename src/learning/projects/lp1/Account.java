@@ -3,6 +3,7 @@ package learning.projects.lp1;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Account {
 	// Class variables
@@ -28,10 +29,14 @@ public class Account {
 
 	// Method: money withdraw.
 	public void withdraw(BigDecimal value) {
-		if (value.compareTo(BigDecimal.ZERO) != 0.0) {
-			setBalance(value.negate());
-			setTransaction(value.negate());
-			System.out.println(currencyFormat(value) + " withdrawn from your account.");
+		if (value.compareTo(BigDecimal.ZERO) > 0.0) {
+			BigDecimal currentBalance = getBalance();
+			int result = currentBalance.compareTo(value);
+			if (result != -1) {
+				setBalance(value.negate());
+				setTransaction(value.negate());
+				System.out.println(currencyFormat(value) + " withdrawn from your account.");
+			}
 		}
 	}
 
@@ -48,10 +53,12 @@ public class Account {
 		System.out.println("Total amount after investment: " + currencyFormat(investmentTotalResult));
 	}
 
-	// Method: display options menu
+	public BigDecimal getBalance() {
+		return balance;
+	}
 
-	public void getBalance() {
-		System.out.println("Current Balance: " + currencyFormat(balance));
+	public void printBalance() {
+		System.out.println(currencyFormat(getBalance()));
 	}
 
 	public void setBalance(BigDecimal value) {
@@ -97,5 +104,53 @@ public class Account {
 	 */
 	public static String currencyFormat(BigDecimal value) {
 		return NumberFormat.getCurrencyInstance().format(value);
+	}
+
+	// Method: display options menu
+	public void showMenu() {
+		int operation = 0;
+		Scanner input = new Scanner(System.in);
+		// TODO: put this menu in a method
+		System.out.println("Welcome " + getClientName() + "!");
+		System.out.println();
+		System.out.println("===========BANKING MENU===========");
+		System.out.println("1. Check balance");
+		System.out.println("2. Deposit");
+		System.out.println("3. Withdraw");
+		System.out.println("4. Simulate investiment");
+		System.out.println("5. Show transactions history");
+		System.out.println("6. Exit");
+		System.out.println("==================================");
+		System.out.print("Please, choose your operation:");
+
+		do {
+
+			operation = input.nextInt();
+
+			switch (operation) {
+			case 1:
+				printBalance();
+				break;
+			case 2:
+				// deposit operation input
+				break;
+			case 3:
+				// withdraw operation input
+				break;
+			case 4:
+				// simulate investiment operation input
+				break;
+			case 5:
+				getTransactions();
+				break;
+			case 6:
+				System.out.println("Thank you for banking with us!");
+				break;
+			default:
+				System.out.println("Invalid option! Please choose a number between 1 and 6.");
+				break;
+			}
+		} while (operation != 6);
+		System.err.println("Goodbye.");
 	}
 }
