@@ -110,7 +110,53 @@ public class Account {
 	public void showMenu() {
 		int operation = 0;
 		Scanner input = new Scanner(System.in);
-		// TODO: put this menu in a method
+		mainMenu();
+
+		do {
+
+			operation = input.nextInt();
+
+			switch (operation) {
+			case 1:
+				// get balance
+				printBalance();
+				mainMenu();
+				break;
+			case 2:
+				// deposit operation input
+				System.out.print("Please, enter the value you want to deposit: ");
+				BigDecimal depositValue = input.nextBigDecimal();
+				deposit(depositValue);
+				mainMenu();
+				break;
+			case 3:
+				// withdraw operation input
+				System.out.print("Please, enter the value you want to withdraw: ");
+				BigDecimal withdrawValue = input.nextBigDecimal();
+				withdraw(withdrawValue);
+				mainMenu();
+				break;
+			case 4:
+				// simulate investiment operation input
+				break;
+			case 5:
+				// list transactions
+				getTransactions();
+				mainMenu();
+				break;
+			case 6:
+				System.out.println("Thank you for banking with us!");
+				break;
+			default:
+				System.out.println("Invalid option! Please choose a number between 1 and 6.");
+				mainMenu();
+				break;
+			}
+		} while (operation != 6);
+		System.err.println("Goodbye.");
+	}
+
+	private void mainMenu() {
 		System.out.println("Welcome " + getClientName() + "!");
 		System.out.println();
 		System.out.println("===========BANKING MENU===========");
@@ -121,36 +167,6 @@ public class Account {
 		System.out.println("5. Show transactions history");
 		System.out.println("6. Exit");
 		System.out.println("==================================");
-		System.out.print("Please, choose your operation:");
-
-		do {
-
-			operation = input.nextInt();
-
-			switch (operation) {
-			case 1:
-				printBalance();
-				break;
-			case 2:
-				// deposit operation input
-				break;
-			case 3:
-				// withdraw operation input
-				break;
-			case 4:
-				// simulate investiment operation input
-				break;
-			case 5:
-				getTransactions();
-				break;
-			case 6:
-				System.out.println("Thank you for banking with us!");
-				break;
-			default:
-				System.out.println("Invalid option! Please choose a number between 1 and 6.");
-				break;
-			}
-		} while (operation != 6);
-		System.err.println("Goodbye.");
+		System.out.print("Please, choose your operation: ");
 	}
 }
